@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design &mdash; Why I want to work in publishing</title>
+<meta name="description" content="Why I want to work in publishing &mdash; a short presentation by Partha Sarathi Patra.">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+
+  body { background: var(--ink); }
+
+  .site-nav { background: rgba(28,26,23,0.85); border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .site-nav .brand { color: var(--paper); }
+  .site-nav a.nav-link { color: rgba(250,246,238,0.6); }
+  .site-nav a.nav-link:hover, .site-nav a.nav-link.active { color: var(--paper); }
+
+  .deck-intro {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 1rem;
+    text-align: center;
+    color: var(--paper);
+  }
+  .deck-intro .eyebrow { color: var(--gold); }
+  .deck-intro p { color: rgba(250,246,238,0.65); font-size: 0.95rem; }
+
+  /* ---------- slide shell ---------- */
+
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 1.5rem 4.5rem;
+    position: relative;
+    scroll-margin-top: 0;
+  }
+  .slide-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .slide .page-no {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.75rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+  }
+  .slide h2 {
+    font-size: clamp(1.8rem, 4.5vw, 2.7rem);
+    text-align: center;
+  }
+  .slide .divider {
+    width: 64px;
+    height: 2px;
+    margin: 1.75rem auto;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  /* ---------- side dot nav ---------- */
+
+  .slide-dots {
+    position: fixed;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .slide-dots a {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(250,246,238,0.3);
+    display: block;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .slide-dots a.active {
+    background: var(--gold);
+    transform: scale(1.3);
+  }
+  @media (max-width: 680px) {
+    .slide-dots { display: none; }
+  }
+
+  /* ================= slide themes ================= */
+
+  .slide-1 { background: linear-gradient(160deg, #3c6a60, #274740); color: #f3efe4; }
+  .slide-2 { background: linear-gradient(160deg, #e2bcb9, #d1a6a4); color: #4a1f22; }
+  .slide-3 { background: linear-gradient(160deg, #16233f, #0e1830); color: #f3efe4; }
+  .slide-4 { background: linear-gradient(160deg, #d9ae42, #c99a2e); color: #3a2a08; }
+  .slide-5 { background: #f2ecd9; color: #2a2620; }
+  .slide-6 { background: linear-gradient(160deg, #7c2330, #5f1b25); color: #f6ece2; }
+
+  /* ---------- slide 1 : title ---------- */
+
+  .slide-1 h1 {
+    font-size: clamp(2.4rem, 7vw, 3.8rem);
+    text-align: center;
+    color: #fbf8f1;
+  }
+  .slide-1 .lines {
+    text-align: center;
+    font-size: 1.15rem;
+    margin: 2rem 0 1rem;
+  }
+  .slide-1 .lines p { margin: 0.35em 0; }
+  .slide-1 strong { color: var(--gold); }
+  .slide-1 .byline {
+    text-align: center;
+    margin-top: 3rem;
+  }
+  .slide-1 .byline .name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+  .slide-1 .byline .role {
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  /* ---------- slide 2 : loop diagram ---------- */
+
+  .slide-2 h2 em { color: #5f171d; }
+  .loop-grid {
+    display: grid;
+    grid-template-columns: 1fr 3rem 1fr;
+    grid-template-rows: auto 3rem auto;
+    grid-template-areas:
+      "reading  arrow-r thinking"
+      "arrow-u  .       arrow-d"
+      "editing  arrow-l writing";
+    align-items: center;
+    margin: 2.5rem 0;
+    row-gap: 0.5rem;
+  }
+  .loop-node .step { font-size: 0.72rem; opacity: 0.55; float: right; }
+  .loop-node h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; margin-bottom: 0.15rem; }
+  .loop-node p { margin: 0; font-style: italic; font-size: 0.9rem; opacity: 0.8; }
+  .loop-node { border-bottom: 1px solid rgba(74,31,34,0.25); padding-bottom: 0.5rem; }
+  .node-reading  { grid-area: reading; }
+  .node-thinking { grid-area: thinking; text-align: right; }
+  .node-editing  { grid-area: editing; }
+  .node-writing  { grid-area: writing; text-align: right; }
+  .arrow { font-size: 1.5rem; text-align: center; opacity: 0.75; }
+  .arrow-r { grid-area: arrow-r; }
+  .arrow-d { grid-area: arrow-d; }
+  .arrow-l { grid-area: arrow-l; }
+  .arrow-u { grid-area: arrow-u; }
+
+  .loop-notes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2.5rem 0 2rem;
+    text-align: center;
+  }
+  .loop-notes .col:first-child { border-right: 1px solid rgba(74,31,34,0.25); }
+  .loop-notes .label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .loop-icon { margin: 0 auto 0.75rem; width: 60px; height: 60px; position: relative; }
+  .icon-inward {
+    width: 100%; height: 100%;
+    border: 2px dashed rgba(74,31,34,0.6);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+  }
+  .icon-outward {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+  }
+  .icon-outward::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 6px;
+    width: 48px; height: 48px;
+    border: 2px solid rgba(74,31,34,0.6);
+    border-radius: 50%;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    transform: rotate(45deg);
+  }
+  .loop-notes p.body { font-size: 0.9rem; opacity: 0.85; margin: 0; }
+
+  .slide-2 .closing {
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+  .slide-2 .closing strong { color: #5f171d; }
+
+  /* ---------- slide 3 : motivation + card ---------- */
+
+  .slide-3 p { font-size: 1.05rem; text-align: center; margin: 0 0 1.4rem; }
+  .slide-3 strong { color: var(--gold); }
+
+  .acq-card {
+    margin: 3rem auto 0;
+    max-width: 360px;
+    background: #ece5d3;
+    color: #2a2620;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+    padding: 1.25rem 1.35rem 1.5rem;
+    border-radius: 2px;
+    transform: rotate(-2deg);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+    position: relative;
+  }
+  .acq-card .stamp {
+    position: absolute;
+    top: 0.75rem; right: 0.9rem;
+    width: 62px; height: 62px;
+    border: 2px solid #a33;
+    border-radius: 50%;
+    color: #a33;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    transform: rotate(12deg);
+  }
+  .acq-card .title-line {
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.15rem;
+    padding-right: 4.5rem;
+  }
+  .acq-card .sub-line {
+    font-size: 0.65rem;
+    opacity: 0.7;
+    margin-bottom: 0.9rem;
+    padding-right: 4.5rem;
+  }
+  .acq-card dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.35rem 0.5rem;
+  }
+  .acq-card dt { opacity: 0.6; white-space: nowrap; }
+  .acq-card dd {
+    margin: 0;
+    border-bottom: 1px dotted rgba(42,38,32,0.4);
+  }
+  .acq-card .footnote {
+    margin-top: 1rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(42,38,32,0.25);
+    font-size: 0.6rem;
+    letter-spacing: 0.04em;
+    opacity: 0.65;
+    text-align: right;
+  }
+
+  /* ---------- slide 4 : operations ---------- */
+
+  .slide-4 .lede { text-align: center; font-size: 1.05rem; margin: 0 auto 2rem; max-width: 34rem; }
+  .slide-4 strong { color: #5f171d; }
+  .desks {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .desk h4 {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0 0 0.8rem;
+    opacity: 0.75;
+  }
+  .desk ul { list-style: none; margin: 0; padding: 0; font-style: italic; font-size: 0.92rem; }
+  .desk li { margin-bottom: 0.6rem; }
+  .desk.right { text-align: right; }
+  @media (max-width: 680px) {
+    .desks { grid-template-columns: 1fr; }
+    .desk.right { text-align: left; }
+    .desk.center { order: -1; }
+  }
+
+  .timeline {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
+    opacity: 0.6;
+    border-top: 1px solid rgba(58,42,8,0.3);
+    padding-top: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  .timeline span { flex: 1; min-width: 90px; }
+  .timeline strong { display: block; font-weight: 700; }
+
+  /* ---------- slide 5 : poem / margin notes ---------- */
+
+  .slide-5 .slide-inner { max-width: 920px; }
+  .slide-5 .dateline {
+    text-align: right;
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+  .poem-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 1.5rem;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent, transparent 33px, rgba(42,38,32,0.08) 34px
+    );
+  }
+  .margin-note {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    line-height: 1.3;
+    opacity: 0.85;
+  }
+  .margin-note + .margin-note { margin-top: 2.5rem; }
+  .margin-note .cap {
+    display: block;
+    margin-top: 0.4rem;
+    font-family: 'Lora', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    font-style: normal;
+  }
+  .poem-center p { font-size: 1rem; text-align: center; margin: 0 0 1.4rem; }
+  .poem-center strong { color: var(--maroon); }
+  .col-right { text-align: right; }
+
+  /* ---------- slide 6 : trained hands ---------- */
+
+  .slide-6 p { text-align: center; font-size: 1.05rem; margin: 0 auto 1.3rem; max-width: 34rem; }
+  .slide-6 strong { color: var(--gold); }
+
+  .shelf {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+  .spine {
+    width: 92px;
+    height: 150px;
+    border-radius: 3px;
+    padding: 0.7rem 0.55rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 0.62rem;
+    line-height: 1.25;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.35);
+    transform: rotate(var(--tilt, 0deg));
+    color: #fff;
+  }
+  .spine .t { font-weight: 700; font-family: 'Playfair Display', serif; font-size: 0.72rem; }
+  .spine .a { opacity: 0.85; }
+  .spine:nth-child(1) { background: #efe3cf; color: #2a2620; --tilt: -4deg; }
+  .spine:nth-child(2) { background: #cf5b4a; --tilt: -2deg; }
+  .spine:nth-child(3) { background: #2c2620; --tilt: 1deg; }
+  .spine:nth-child(4) { background: #2f6b5e; --tilt: -1deg; }
+  .spine:nth-child(5) { background: #f2d24a; color: #2a2620; --tilt: 3deg; }
+  .spine:nth-child(6) { background: #2b6ea0; --tilt: 5deg; }
+
+  .slide-6 .closing-line {
+    margin-top: 2.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+  .slide-6 .closing-line a { color: inherit; }
+
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="brand" href="index.html">Partha Sarathi Patra</a>
+  <ul>
+    <li><a class="nav-link" href="index.html">Home</a></li>
+    <li><a class="nav-link active" href="design.html">Design</a></li>
+  </ul>
+</nav>
+
+<div class="slide-dots">
+  <a href="#slide-1" class="active" aria-label="Slide 1"></a>
+  <a href="#slide-2" aria-label="Slide 2"></a>
+  <a href="#slide-3" aria-label="Slide 3"></a>
+  <a href="#slide-4" aria-label="Slide 4"></a>
+  <a href="#slide-5" aria-label="Slide 5"></a>
+  <a href="#slide-6" aria-label="Slide 6"></a>
+</div>
+
+<div class="deck-intro">
+  <span class="eyebrow">Presentation</span>
+  <p>Six short slides on why I want to work in publishing &mdash; scroll to move through them, or use the dots on the right.</p>
+</div>
+
+<!-- SLIDE 1 — TITLE -->
+<section class="slide slide-1" id="slide-1">
+  <div class="slide-inner">
+    <h1>Why I want to work in <span class="script" style="color:#e8c674;">publishing</span></h1>
+    <div class="lines">
+      <p>Not just because I love books.</p>
+      <p>Every good reader loves books.</p>
+      <p>I want a hand in the <strong>making</strong> of books.</p>
+    </div>
+    <div class="divider"></div>
+    <div class="byline">
+      <div class="name">Partha Sarathi Patra</div>
+      <div class="role">Editing &middot; Research &middot; Translation, English and Bengali</div>
+    </div>
+  </div>
+  <span class="page-no">01</span>
+</section>
+
+<!-- SLIDE 2 — THE LOOP -->
+<section class="slide slide-2" id="slide-2">
+  <div class="slide-inner">
+    <h2>One loop, running <em>backwards</em><br>as often as <em>forwards</em>.</h2>
+
+    <div class="loop-grid">
+      <div class="loop-node node-reading">
+        <span class="step">01</span>
+        <h3>Reading</h3>
+        <p>taking the world in</p>
+      </div>
+      <div class="arrow arrow-r">&rarr;</div>
+      <div class="loop-node node-thinking">
+        <span class="step">02</span>
+        <h3>Thinking</h3>
+        <p>giving it a structure</p>
+      </div>
+
+      <div class="arrow arrow-u">&uarr;</div>
+      <div class="arrow arrow-d">&darr;</div>
+
+      <div class="loop-node node-editing">
+        <span class="step">04</span>
+        <h3>Editing</h3>
+        <p>making it reach someone</p>
+      </div>
+      <div class="arrow arrow-l">&larr;</div>
+      <div class="loop-node node-writing">
+        <span class="step">03</span>
+        <h3>Writing</h3>
+        <p>turning it into a claim</p>
+      </div>
+    </div>
+
+    <div class="loop-notes">
+      <div class="col">
+        <div class="label">Turned inward</div>
+        <div class="loop-icon"><div class="icon-inward">&#8635;</div></div>
+        <p class="body">It closes when an editor, a developer or a strategist understands the ideas.</p>
+      </div>
+      <div class="col">
+        <div class="label">Turned outward &rarr; Readers</div>
+        <div class="loop-icon"><div class="icon-outward">&rarr;</div></div>
+        <p class="body">It closes when it is ultimately published and the readers read the text.</p>
+      </div>
+    </div>
+
+    <p class="closing">Publishing is that loop <strong>turned outward</strong> &mdash; run for
+      <strong>somebody else&rsquo;s book</strong> instead of my own. That turn is the whole
+      distance between <strong>a draft and a book</strong>.</p>
+  </div>
+  <span class="page-no">02</span>
+</section>
+
+<!-- SLIDE 3 — MOTIVATION -->
+<section class="slide slide-3" id="slide-3">
+  <div class="slide-inner">
+    <h2>The motivation behind<br>working in this <span class="script" style="color:#e8c674;">sector</span></h2>
+
+    <p>History, literature and lived experience have taught me that there have always
+      been aspects of our lives, our society, our culture and our politics that
+      <strong>lack rightful representation</strong> &mdash; aspects that could resist the
+      <strong>prevailing hegemonic discourses</strong>. I would like to work towards
+      bringing those to the reading public.</p>
+
+    <p>Someone has to decide that a testimony deserves a print run, a price and a
+      place in a catalogue. Until that decision is taken, it stays a
+      <strong>private document</strong>.</p>
+
+    <p>I would like to be among the people who take it &mdash; and who make sure the
+      telling survives the teller.</p>
+
+    <div class="acq-card">
+      <div class="stamp">AWAITING<br>DECISION</div>
+      <div class="title-line">Register of Acquisitions</div>
+      <div class="sub-line">Record of a manuscript received &middot; Record for: Testimony</div>
+      <dl>
+        <dt>Record No.</dt><dd>RS&ndash;34&ndash;1/2</dd>
+        <dt>Title</dt><dd>untitled ms.</dd>
+        <dt>Author</dt><dd>P. S. P.</dd>
+        <dt>Subject</dt><dd>South Asia, 20th c.</dd>
+        <dt>Received</dt><dd>18.08.26</dd>
+        <dt>Imprint</dt><dd>awaiting one</dd>
+        <dt>Price</dt><dd>not yet set</dd>
+        <dt>Shelfmark</dt><dd>none</dd>
+        <dt>Decided on</dt><dd>&nbsp;</dd>
+      </dl>
+      <div class="footnote">Until these fields are filled, it stays a private document</div>
+    </div>
+  </div>
+  <span class="page-no">03</span>
+</section>
+
+<!-- SLIDE 4 — OPERATIONS -->
+<section class="slide slide-4" id="slide-4">
+  <div class="slide-inner">
+    <h2>Different operations, and the different<br>demands, of the <em>publishing industry</em></h2>
+
+    <p class="lede">A manuscript does not publish itself. It requires editorial,
+      development, strategy and marketing &mdash; <strong>different operations under
+      different names</strong> &mdash; before it can become publishable, and at last
+      available to a reading public.</p>
+
+    <p class="lede">Advances in technology, AI models included, cannot replace the
+      <strong>human creativity</strong> this industry demands. Can they augment it? Maybe!</p>
+
+    <p class="lede">What no model can do is decide what deserves to be made, or answer
+      to the author whose work it is. Those remain <strong>human judgements</strong>,
+      taken by named people at named desks.</p>
+
+    <div class="desks">
+      <div class="desk">
+        <h4>At the editorial desk</h4>
+        <ul>
+          <li>fact-check every claim</li>
+          <li>structure the manuscript</li>
+          <li>commission a reader&rsquo;s report</li>
+          <li>clear permissions &amp; credits</li>
+          <li>line-edit, then proof</li>
+        </ul>
+      </div>
+      <div class="desk center"></div>
+      <div class="desk right">
+        <h4>At the development desk</h4>
+        <ul>
+          <li>shape the brief</li>
+          <li>query the author</li>
+          <li>rebuild the chapters</li>
+          <li>apparatus, notes &amp; index</li>
+          <li>comparable titles, schedule, specs</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <span><strong>Movable Type</strong>&mdash;</span>
+      <span><strong>1800s</strong>Mechanical Typewriters</span>
+      <span><strong>1970s</strong>Electric Word Processors</span>
+      <span><strong>Late 1900s</strong>Personal Computers</span>
+      <span><strong>2000s&ndash;Present</strong>Modern Computing</span>
+    </div>
+  </div>
+  <span class="page-no">04</span>
+</section>
+
+<!-- SLIDE 5 — POEM / MARGIN NOTES -->
+<section class="slide slide-5" id="slide-5">
+  <div class="slide-inner">
+    <div class="dateline">Bankura &middot; Kolkata, 2026</div>
+    <h2 style="color:var(--maroon);">I also write to make sense<br>of the worlds I <em style="color:var(--maroon);">live in</em></h2>
+
+    <div class="poem-layout">
+      <div class="col-left">
+        <div class="margin-note">
+          Life is not a rat race to be won and lost; rather it is a sojourn to relish
+          and remember with all your potential.
+          <span class="cap">Kanchanjunga</span>
+        </div>
+        <div class="margin-note">
+          হোঁচট খেতে খেতে, মুখ থুবড়ে পড়লেও উঠে দাঁড়িয়ে একা জীবনে এগিয়ে যেতে হয়।
+        </div>
+        <div class="margin-note">
+          Over and above all, hope remains the self&rsquo;s sole enzyme that makes us
+          think of becoming better in newer times.
+          <span class="cap">New Year&rsquo;s Resolution</span>
+        </div>
+      </div>
+
+      <div class="poem-center">
+        <p>Writing has always been my way of making sense of the world &mdash; its
+          silences, its violence, and its quiet moments of grace. These poems emerge
+          from <strong>lived experience</strong>, from the <strong>margins</strong>,
+          and from a deep belief in the power of words to <strong>witness, resist,
+          and heal</strong>.</p>
+
+        <p>I archive them out. I know the shape of the wait from the inside &mdash;
+          which is a <strong>qualification</strong>, not a hobby, for an editor or
+          developer. A creator&rsquo;s work that has <strong>never been edited or
+          developed</strong> by someone else has <strong>never been published</strong>.</p>
+      </div>
+
+      <div class="col-right">
+        <div class="margin-note">
+          But if a king could answer catastrophe with four minarets, then our
+          energetic walk around it is our own thanksgiving.
+          <span class="cap">Charminar</span>
+        </div>
+        <div class="margin-note">
+          Let us not be proud of our disabilities, but of our capabilities and
+          preferences.
+          <span class="cap">Beyond &ldquo;Pride&rdquo;</span>
+        </div>
+        <div class="margin-note">
+          বাংলায় পরিবর্তনের নবজাগরণ আমরা দেখিয়াছি, বঞ্চনা, হতাশা ও হীনমন্যতায়
+          বাঁচিতে চাই না আর।।
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="page-no" style="color:#2a2620;">05</span>
+</section>
+
+<!-- SLIDE 6 — TRAINED HANDS -->
+<section class="slide slide-6" id="slide-6">
+  <div class="slide-inner">
+    <h2>Not mere enthusiasm.<br><span class="script" style="color:#f0c96b;">Trained hands.</span></h2>
+
+    <p>Published materials exist only because, beyond the first author, many others
+      wanted them <strong>printed or digitised properly</strong>. I bring to the
+      industry research training, editorial training, training in <strong>Bengali
+      and English translation</strong>, teaching experience, and a rejection folder
+      of my own.</p>
+
+    <p>Three questions stand between a manuscript and a published text. Is it true?
+      Is it needed? <strong>How will it be remembered by its readers?</strong>
+      I would like to be one of the people who help answer each of them.</p>
+
+    <div class="shelf" aria-label="Reference shelf: books on editing and style">
+      <div class="spine"><span class="t">Eats, Shoots &amp; Leaves</span><span class="a">Lynne Truss</span></div>
+      <div class="spine"><span class="t">The Sense of Style</span><span class="a">Steven Pinker</span></div>
+      <div class="spine"><span class="t">Revising Prose</span><span class="a">Richard&nbsp;A. Lanham</span></div>
+      <div class="spine"><span class="t">Dreyer&rsquo;s English</span><span class="a">Benjamin Dreyer</span></div>
+      <div class="spine"><span class="t">The Subversive Copy Editor</span><span class="a">Carol Fisher Saller</span></div>
+      <div class="spine"><span class="t">Line by Line</span><span class="a">MLA</span></div>
+    </div>
+
+    <div class="closing-line">Design and text &copy; 2026 Partha Sarathi Patra</div>
+  </div>
+  <span class="page-no">06</span>
+</section>
+
+<footer class="site-footer" style="background: var(--ink); color: rgba(250,246,238,0.5); border-color: rgba(255,255,255,0.1);">
+  Design and text &copy; 2026 Partha Sarathi Patra &middot; <a href="index.html">Back to home</a>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

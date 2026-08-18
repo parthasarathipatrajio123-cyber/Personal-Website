@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partha Sarathi Patra</title>
+<meta name="description" content="Personal website of Partha Sarathi Patra — editing, research, and translation, English and Bengali.">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .hero {
+    padding: 6rem 1.5rem 4rem;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+  }
+  .hero p.lede {
+    max-width: 40rem;
+    margin: 1.25rem auto 0;
+    font-size: 1.15rem;
+    color: var(--muted);
+  }
+  .roles {
+    margin-top: 1.75rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .roles span { color: var(--line); margin: 0 0.6em; }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0 5rem;
+  }
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 2rem 1.75rem;
+    background: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: var(--ink);
+    display: block;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(28,26,23,0.08);
+  }
+  .card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .card p { color: var(--muted); margin: 0; font-size: 0.95rem; }
+  .card .go {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  blockquote.pull {
+    max-width: 40rem;
+    margin: 0 auto 5rem;
+    padding: 0 1.5rem;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--ink);
+  }
+  blockquote.pull cite {
+    display: block;
+    margin-top: 1rem;
+    font-family: 'Lora', serif;
+    font-style: normal;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="brand" href="index.html">Partha Sarathi Patra</a>
+  <ul>
+    <li><a class="nav-link active" href="index.html">Home</a></li>
+    <li><a class="nav-link" href="design.html">Design</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <span class="eyebrow">Editing &middot; Research &middot; Translation</span>
+  <h1>Partha Sarathi&nbsp;Patra</h1>
+  <p class="lede">
+    I read to take the world in, and I write and edit to make sense of it &mdash;
+    across English and Bengali, across margins that don't always get a hearing.
+  </p>
+  <p class="roles">Editing <span>&middot;</span> Research <span>&middot;</span> Translation, English and Bengali</p>
+</header>
+
+<main class="wrap">
+  <div class="cards">
+    <a class="card" href="design.html">
+      <h3>Why I want to work in <span class="accent-italic">publishing</span></h3>
+      <p>A short presentation on why I want a hand in the making of books &mdash; not just the reading of them.</p>
+      <span class="go">View the presentation &rarr;</span>
+    </a>
+  </div>
+
+  <blockquote class="pull">
+    &ldquo;A creator&rsquo;s work that has never been edited or developed by someone else
+    has never been published.&rdquo;
+    <cite>From &mdash; Why I want to work in publishing</cite>
+  </blockquote>
+</main>
+
+<footer class="site-footer">
+  Design and text &copy; 2026 Partha Sarathi Patra
+</footer>
+
+</body>
+</html>
