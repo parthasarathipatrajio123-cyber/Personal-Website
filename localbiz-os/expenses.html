@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-app="expenses">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expenses · LocalBiz OS</title>
+  <meta name="description" content="Track rent, salaries, supplier bills and other business expenses in LocalBiz OS.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="js/main.js"></script>
+</head>
+<body class="app-body">
+  <a class="visually-hidden-focusable" href="#main">Skip to content</a>
+  <div id="appSidebar"></div>
+
+  <div class="app-main">
+    <div id="appTopbar"></div>
+
+    <main id="main" class="app-content">
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb-lite"><i class="bi bi-house"></i> Workspace <i class="bi bi-chevron-right small"></i> Expenses</div>
+          <h1>Expenses</h1>
+          <p>Every rupee going out — rent, salaries, suppliers and more.</p>
+        </div>
+        <div class="page-actions">
+          <button type="button" class="btn btn-light" id="exportBtn"><i class="bi bi-filetype-csv"></i>Export CSV</button>
+          <button type="button" class="btn btn-primary" id="addExpenseBtn"><i class="bi bi-plus-lg"></i>Add expense</button>
+        </div>
+      </div>
+
+      <section class="row g-3 mb-4" id="expenseStats" aria-label="Expense overview"></section>
+
+      <div class="row g-4">
+        <div class="col-xl-8">
+          <section class="lb-card">
+            <div class="toolbar">
+              <label class="search-input mb-0">
+                <span class="visually-hidden">Search expenses</span>
+                <i class="bi bi-search" aria-hidden="true"></i>
+                <input type="search" class="form-control form-control-sm" id="searchInput" placeholder="Search expenses…">
+              </label>
+              <select class="form-select form-select-sm" id="categoryFilter" aria-label="Filter by category"></select>
+              <select class="form-select form-select-sm" id="monthFilter" aria-label="Filter by month"></select>
+              <select class="form-select form-select-sm" id="methodFilter" aria-label="Filter by payment method"></select>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover lb-table">
+                <thead>
+                  <tr>
+                    <th>Expense</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Method</th>
+                    <th class="num">Amount</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="expensesBody"></tbody>
+              </table>
+            </div>
+            <div class="lb-card-footer">
+              <span id="filteredTotal"></span>
+              <div id="expensesPager" class="d-flex align-items-center gap-3 flex-wrap"></div>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-xl-4">
+          <section class="lb-card">
+            <div class="lb-card-header">
+              <div>
+                <h2>By category</h2>
+                <p class="card-sub" id="breakdownSub">For the current filters</p>
+              </div>
+            </div>
+            <div class="lb-card-body" id="categoryBreakdown"></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add / edit expense modal -->
+  <div class="modal fade" id="expenseModal" tabindex="-1" aria-labelledby="expenseModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <form class="modal-content" id="expenseForm" novalidate>
+        <div class="modal-header">
+          <div>
+            <h2 class="modal-title" id="expenseModalTitle">Add expense</h2>
+            <p class="modal-subtitle">Expenses reduce net profit in reports.</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="id">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label" for="eName">Expense name</label>
+              <input type="text" class="form-control" id="eName" name="name" maxlength="80" placeholder="e.g. Electricity bill — September" required>
+              <div class="invalid-feedback">Describe the expense.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="eCategory">Category</label>
+              <select class="form-select" id="eCategory" name="category" required></select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="eAmount">Amount</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text currency-sign">₹</span>
+                <input type="number" class="form-control" id="eAmount" name="amount" min="1" step="0.01" required>
+                <div class="invalid-feedback">Enter an amount of at least 1.</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="eDate">Date</label>
+              <input type="date" class="form-control" id="eDate" name="date" required>
+              <div class="invalid-feedback">Pick a date that isn't in the future.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="eMethod">Payment method</label>
+              <select class="form-select" id="eMethod" name="method" required></select>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="eNotes">Notes <span class="text-muted fw-normal">(optional)</span></label>
+              <textarea class="form-control" id="eNotes" name="notes" rows="2" maxlength="200" placeholder="Bill number, vendor…"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveExpenseBtn"><i class="bi bi-check2"></i>Save expense</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/expenses.js"></script>
+</body>
+</html>

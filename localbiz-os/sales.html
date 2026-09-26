@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-app="sales">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sales · LocalBiz OS</title>
+  <meta name="description" content="Record, search and manage sales in LocalBiz OS.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="js/main.js"></script>
+</head>
+<body class="app-body">
+  <a class="visually-hidden-focusable" href="#main">Skip to content</a>
+  <div id="appSidebar"></div>
+
+  <div class="app-main">
+    <div id="appTopbar"></div>
+
+    <main id="main" class="app-content">
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb-lite"><i class="bi bi-house"></i> Workspace <i class="bi bi-chevron-right small"></i> Sales</div>
+          <h1>Sales</h1>
+          <p>Record sales, track payment status and keep every bill in one place.</p>
+        </div>
+        <div class="page-actions">
+          <button type="button" class="btn btn-light" id="exportBtn"><i class="bi bi-filetype-csv"></i>Export CSV</button>
+          <button type="button" class="btn btn-primary" id="newSaleBtn"><i class="bi bi-plus-lg"></i>New sale</button>
+        </div>
+      </div>
+
+      <section class="row g-3 mb-4" id="salesStats" aria-label="Sales overview"></section>
+
+      <section class="lb-card">
+        <div class="toolbar">
+          <label class="search-input mb-0">
+            <span class="visually-hidden">Search sales</span>
+            <i class="bi bi-search" aria-hidden="true"></i>
+            <input type="search" class="form-control form-control-sm" id="searchInput" placeholder="Search invoice, customer or product…">
+          </label>
+          <label class="d-flex align-items-center gap-2 small text-muted mb-0">From
+            <input type="date" class="form-control form-control-sm" id="fromDate" aria-label="From date">
+          </label>
+          <label class="d-flex align-items-center gap-2 small text-muted mb-0">To
+            <input type="date" class="form-control form-control-sm" id="toDate" aria-label="To date">
+          </label>
+          <select class="form-select form-select-sm" id="statusFilter" aria-label="Filter by payment status">
+            <option value="">All statuses</option>
+            <option>Paid</option><option>Partial</option><option>Pending</option><option>Overdue</option>
+          </select>
+          <button type="button" class="btn btn-sm btn-ghost" id="clearFilters"><i class="bi bi-x-circle"></i>Clear</button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover lb-table">
+            <thead>
+              <tr>
+                <th class="sortable" data-sort="invoiceNo">Invoice <i class="bi bi-arrow-down-up"></i></th>
+                <th>Customer</th>
+                <th class="sortable" data-sort="date">Date <i class="bi bi-arrow-down-up"></i></th>
+                <th>Items</th>
+                <th>Method</th>
+                <th class="num sortable" data-sort="total">Amount <i class="bi bi-arrow-down-up"></i></th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="salesBody"></tbody>
+          </table>
+        </div>
+        <div class="lb-card-footer" id="salesPager"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- New sale modal -->
+  <div class="modal fade" id="saleModal" tabindex="-1" aria-labelledby="saleModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+      <form class="modal-content" id="saleForm" novalidate>
+        <div class="modal-header">
+          <div>
+            <h2 class="modal-title" id="saleModalTitle">New sale</h2>
+            <p class="modal-subtitle">Invoice <strong id="saleInvoiceNo">INV-0000</strong> will be created automatically.</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-4">
+            <div class="col-lg-7">
+              <p class="form-section-title">Customer</p>
+              <div class="row g-3 mb-4">
+                <div class="col-md-7">
+                  <label class="form-label" for="saleCustomer">Customer</label>
+                  <select class="form-select" id="saleCustomer" name="customerId" required></select>
+                  <div class="invalid-feedback">Choose a customer.</div>
+                  <a href="customers.html?action=new" class="form-text d-inline-block mt-1"><i class="bi bi-person-plus"></i> Add a new customer</a>
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label" for="saleDate">Sale date</label>
+                  <input type="date" class="form-control" id="saleDate" name="date" required>
+                  <div class="invalid-feedback">Pick the sale date.</div>
+                </div>
+              </div>
+
+              <p class="form-section-title">Item</p>
+              <div class="row g-3 mb-4">
+                <div class="col-12">
+                  <label class="form-label" for="saleProduct">Product</label>
+                  <select class="form-select" id="saleProduct" name="productId" required></select>
+                  <div class="invalid-feedback">Choose a product that is in stock.</div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label" for="saleQty">Quantity</label>
+                  <input type="number" class="form-control" id="saleQty" name="qty" min="1" step="1" value="1" required>
+                  <div class="invalid-feedback" id="qtyFeedback">Enter a quantity of at least 1.</div>
+                  <div class="form-text" id="stockHint"></div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label" for="salePrice">Unit price</label>
+                  <div class="input-group has-validation">
+                    <span class="input-group-text currency-sign">₹</span>
+                    <input type="number" class="form-control" id="salePrice" name="price" min="0" step="0.01" required>
+                    <div class="invalid-feedback">Enter a valid price.</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label" for="saleDiscount">Discount (%)</label>
+                  <input type="number" class="form-control" id="saleDiscount" name="discountPct" min="0" max="100" step="0.5" value="0" required>
+                  <div class="invalid-feedback">Between 0 and 100.</div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label" for="saleTax">Tax / GST (%)</label>
+                  <input type="number" class="form-control" id="saleTax" name="taxPct" min="0" max="50" step="0.5" required>
+                  <div class="invalid-feedback">Between 0 and 50.</div>
+                </div>
+              </div>
+
+              <p class="form-section-title">Payment</p>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="saleMethod">Payment method</label>
+                  <select class="form-select" id="saleMethod" name="method" required></select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="salePayStatus">Payment status</label>
+                  <select class="form-select" id="salePayStatus" name="paymentStatus">
+                    <option value="Paid">Paid in full</option>
+                    <option value="Partial">Partially paid</option>
+                    <option value="Pending">Not paid yet</option>
+                  </select>
+                </div>
+                <div class="col-md-6" id="amountPaidWrap" hidden>
+                  <label class="form-label" for="saleAmountPaid">Amount received</label>
+                  <div class="input-group has-validation">
+                    <span class="input-group-text currency-sign">₹</span>
+                    <input type="number" class="form-control" id="saleAmountPaid" name="amountPaid" min="0.01" step="0.01">
+                    <div class="invalid-feedback">Must be above zero and below the grand total.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-5">
+              <div class="calc-box position-sticky top-0" aria-live="polite">
+                <p class="form-section-title">Summary</p>
+                <div class="d-flex align-items-center gap-3 mb-3 pb-3 border-bottom" id="summaryProduct">
+                  <span class="product-thumb tone-neutral"><i class="bi bi-box"></i></span>
+                  <div class="text-muted small">Select a product to see the bill.</div>
+                </div>
+                <div class="calc-row"><span>Subtotal</span><span id="calcSubtotal">₹0.00</span></div>
+                <div class="calc-row"><span>Discount</span><span id="calcDiscount">− ₹0.00</span></div>
+                <div class="calc-row"><span>Tax</span><span id="calcTax">₹0.00</span></div>
+                <div class="calc-row total"><span>Grand total</span><span id="calcTotal">₹0.00</span></div>
+                <div class="calc-row text-muted"><span>Balance due</span><span id="calcDue">₹0.00</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveSaleBtn"><i class="bi bi-check2"></i>Save sale</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/sales.js"></script>
+</body>
+</html>

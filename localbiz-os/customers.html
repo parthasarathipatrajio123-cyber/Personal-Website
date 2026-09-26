@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-app="customers">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Customers · LocalBiz OS</title>
+  <meta name="description" content="Customer profiles, purchase history and dues in LocalBiz OS.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="js/main.js"></script>
+</head>
+<body class="app-body">
+  <a class="visually-hidden-focusable" href="#main">Skip to content</a>
+  <div id="appSidebar"></div>
+
+  <div class="app-main">
+    <div id="appTopbar"></div>
+
+    <main id="main" class="app-content">
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb-lite"><i class="bi bi-house"></i> Workspace <i class="bi bi-chevron-right small"></i> Customers</div>
+          <h1>Customers</h1>
+          <p>Contact details, purchase history and outstanding dues for every customer.</p>
+        </div>
+        <div class="page-actions">
+          <button type="button" class="btn btn-light" id="exportBtn"><i class="bi bi-filetype-csv"></i>Export CSV</button>
+          <button type="button" class="btn btn-primary" id="addCustomerBtn"><i class="bi bi-person-plus"></i>Add customer</button>
+        </div>
+      </div>
+
+      <section class="row g-3 mb-4" id="customerStats" aria-label="Customer overview"></section>
+
+      <section class="lb-card">
+        <div class="toolbar">
+          <label class="search-input mb-0">
+            <span class="visually-hidden">Search customers</span>
+            <i class="bi bi-search" aria-hidden="true"></i>
+            <input type="search" class="form-control form-control-sm" id="searchInput" placeholder="Search name, phone or email…">
+          </label>
+          <select class="form-select form-select-sm" id="statusFilter" aria-label="Filter by status">
+            <option value="">All customers</option>
+            <option>Active</option>
+            <option>Inactive</option>
+            <option value="due">With dues</option>
+          </select>
+          <div class="toolbar-spacer d-none d-xl-block"></div>
+          <label class="d-flex align-items-center gap-2 small text-muted mb-0 text-nowrap">Sort by
+            <select class="form-select form-select-sm" id="sortSelect">
+              <option value="name">Name (A–Z)</option>
+              <option value="purchases">Total purchases</option>
+              <option value="due">Outstanding due</option>
+              <option value="recent">Last purchase</option>
+            </select>
+          </label>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover lb-table">
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th class="num">Total purchases</th>
+                <th class="num">Outstanding</th>
+                <th>Last purchase</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="customersBody"></tbody>
+          </table>
+        </div>
+        <div class="lb-card-footer" id="customersFooter"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Customer profile (offcanvas) -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="profilePanel" aria-labelledby="profileTitle">
+    <div class="profile-hero">
+      <div class="d-flex justify-content-between align-items-start">
+        <div class="d-flex align-items-center gap-3" id="profileHead"></div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+    </div>
+    <div class="offcanvas-body p-4" id="profileBody"></div>
+  </div>
+
+  <!-- Add / edit customer modal -->
+  <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <form class="modal-content" id="customerForm" novalidate>
+        <div class="modal-header">
+          <div>
+            <h2 class="modal-title" id="customerModalTitle">Add customer</h2>
+            <p class="modal-subtitle">Saved customers can be selected when billing.</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="id">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label" for="cName">Full name</label>
+              <input type="text" class="form-control" id="cName" name="name" maxlength="60" minlength="2" placeholder="e.g. Rahul Das" required>
+              <div class="invalid-feedback">Enter the customer's name.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="cPhone">Phone</label>
+              <input type="tel" class="form-control" id="cPhone" name="phone" placeholder="+91 98300 12345" pattern="^\+?[0-9\s\-]{10,15}$" required>
+              <div class="invalid-feedback" id="phoneFeedback">Enter a valid 10-digit phone number.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="cEmail">Email <span class="text-muted fw-normal">(optional)</span></label>
+              <input type="email" class="form-control" id="cEmail" name="email" placeholder="name@example.com">
+              <div class="invalid-feedback">Enter a valid email address.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="cAddress">Address <span class="text-muted fw-normal">(optional)</span></label>
+              <input type="text" class="form-control" id="cAddress" name="address" maxlength="120" placeholder="Area, city">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="cStatus">Status</label>
+              <select class="form-select" id="cStatus" name="status">
+                <option>Active</option>
+                <option>Inactive</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="cNotes">Notes <span class="text-muted fw-normal">(optional)</span></label>
+              <textarea class="form-control" id="cNotes" name="notes" rows="2" maxlength="240" placeholder="Preferences, credit terms…"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveCustomerBtn"><i class="bi bi-check2"></i>Save customer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/customers.js"></script>
+</body>
+</html>

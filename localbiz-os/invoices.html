@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-app="invoices">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invoices · LocalBiz OS</title>
+  <meta name="description" content="Create, view, print and download invoices in LocalBiz OS.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="js/main.js"></script>
+</head>
+<body class="app-body">
+  <a class="visually-hidden-focusable" href="#main">Skip to content</a>
+  <div id="appSidebar"></div>
+
+  <div class="app-main">
+    <div id="appTopbar"></div>
+
+    <main id="main" class="app-content">
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb-lite"><i class="bi bi-house"></i> Workspace <i class="bi bi-chevron-right small"></i> Invoices</div>
+          <h1>Invoices</h1>
+          <p>Professional, printable invoices for every sale.</p>
+        </div>
+        <div class="page-actions">
+          <button type="button" class="btn btn-light" id="exportBtn"><i class="bi bi-filetype-csv"></i>Export CSV</button>
+          <button type="button" class="btn btn-primary" id="newInvoiceBtn"><i class="bi bi-plus-lg"></i>Create invoice</button>
+        </div>
+      </div>
+
+      <section class="row g-3 mb-4" id="invoiceStats" aria-label="Invoice overview"></section>
+
+      <section class="lb-card">
+        <div class="toolbar">
+          <label class="search-input mb-0">
+            <span class="visually-hidden">Search invoices</span>
+            <i class="bi bi-search" aria-hidden="true"></i>
+            <input type="search" class="form-control form-control-sm" id="searchInput" placeholder="Search invoice number or customer…">
+          </label>
+          <select class="form-select form-select-sm" id="statusFilter" aria-label="Filter by payment status">
+            <option value="">All statuses</option>
+            <option>Paid</option><option>Partial</option><option>Pending</option><option>Overdue</option>
+          </select>
+          <select class="form-select form-select-sm" id="periodFilter" aria-label="Filter by period">
+            <option value="">All time</option>
+            <option value="7">Last 7 days</option>
+            <option value="30">Last 30 days</option>
+            <option value="month">This month</option>
+          </select>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover lb-table">
+            <thead>
+              <tr>
+                <th>Invoice</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Due date</th>
+                <th class="num">Amount</th>
+                <th>Payment status</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="invoicesBody"></tbody>
+          </table>
+        </div>
+        <div class="lb-card-footer" id="invoicesPager"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Create invoice modal -->
+  <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+      <form class="modal-content" id="invoiceForm" novalidate>
+        <div class="modal-header">
+          <div>
+            <h2 class="modal-title" id="invoiceModalTitle">Create invoice <span class="chip ms-1" id="invoiceNoChip">INV-0000</span></h2>
+            <p class="modal-subtitle">Add one or more products. Stock is updated when the invoice is saved.</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <p class="form-section-title">Bill to</p>
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label class="form-label" for="invCustomer">Customer</label>
+                  <select class="form-select" id="invCustomer" name="customerId" required></select>
+                  <div class="invalid-feedback">Choose a customer.</div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label" for="invDate">Invoice date</label>
+                  <input type="date" class="form-control" id="invDate" name="date" required>
+                  <div class="invalid-feedback">Required.</div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label" for="invDue">Due date</label>
+                  <input type="date" class="form-control" id="invDue" name="dueDate" required>
+                  <div class="invalid-feedback">On or after the invoice date.</div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <p class="form-section-title mb-0">Products</p>
+                <button type="button" class="btn btn-sm btn-light" id="addLineBtn"><i class="bi bi-plus-lg"></i>Add line</button>
+              </div>
+              <div class="line-items mb-4">
+                <div class="line-item line-head d-none d-md-grid"><span>Product</span><span>Qty</span><span>Price</span><span class="text-end">Amount</span><span></span></div>
+                <div id="lineItems"></div>
+              </div>
+
+              <p class="form-section-title">Charges &amp; payment</p>
+              <div class="row g-3">
+                <div class="col-6 col-md-3">
+                  <label class="form-label" for="invDiscount">Discount (%)</label>
+                  <input type="number" class="form-control" id="invDiscount" name="discountPct" min="0" max="100" step="0.5" value="0" required>
+                  <div class="invalid-feedback">0–100.</div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label" for="invTax">Tax / GST (%)</label>
+                  <input type="number" class="form-control" id="invTax" name="taxPct" min="0" max="50" step="0.5" required>
+                  <div class="invalid-feedback">0–50.</div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label" for="invMethod">Method</label>
+                  <select class="form-select" id="invMethod" name="method"></select>
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label" for="invPayStatus">Status</label>
+                  <select class="form-select" id="invPayStatus" name="paymentStatus">
+                    <option value="Pending">Unpaid</option>
+                    <option value="Partial">Partially paid</option>
+                    <option value="Paid">Paid in full</option>
+                  </select>
+                </div>
+                <div class="col-md-6" id="invPaidWrap" hidden>
+                  <label class="form-label" for="invAmountPaid">Amount received</label>
+                  <div class="input-group has-validation">
+                    <span class="input-group-text currency-sign">₹</span>
+                    <input type="number" class="form-control" id="invAmountPaid" name="amountPaid" min="0.01" step="0.01">
+                    <div class="invalid-feedback">Must be above zero and below the grand total.</div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="invNotes">Notes <span class="text-muted fw-normal">(optional)</span></label>
+                  <input type="text" class="form-control" id="invNotes" name="notes" maxlength="160" placeholder="e.g. Delivered to shop counter">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="calc-box position-sticky top-0" aria-live="polite">
+                <p class="form-section-title">Invoice summary</p>
+                <div class="calc-row"><span>Items</span><span id="sumItems">0</span></div>
+                <div class="calc-row"><span>Subtotal</span><span id="sumSubtotal">₹0.00</span></div>
+                <div class="calc-row"><span>Discount</span><span id="sumDiscount">− ₹0.00</span></div>
+                <div class="calc-row"><span>Tax</span><span id="sumTax">₹0.00</span></div>
+                <div class="calc-row total"><span>Grand total</span><span id="sumTotal">₹0.00</span></div>
+                <div class="calc-row text-muted"><span>Balance due</span><span id="sumDue">₹0.00</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light d-none d-sm-inline-flex" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-light text-nowrap" data-then="print"><i class="bi bi-printer"></i>Save &amp; print</button>
+          <button type="submit" class="btn btn-primary" data-then="view"><i class="bi bi-check2"></i>Create invoice</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <template id="lineTemplate">
+    <div class="line-item">
+      <div class="li-product">
+        <select class="form-select form-select-sm" data-field="productId" aria-label="Product" required></select>
+      </div>
+      <input type="number" class="form-control form-control-sm" data-field="qty" min="1" step="1" value="1" aria-label="Quantity" required>
+      <input type="number" class="form-control form-control-sm" data-field="price" min="0" step="0.01" aria-label="Unit price" required>
+      <div class="line-total" data-field="total">₹0.00</div>
+      <button type="button" class="btn btn-icon danger" data-remove aria-label="Remove line"><i class="bi bi-x-lg"></i></button>
+    </div>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/invoices.js"></script>
+</body>
+</html>

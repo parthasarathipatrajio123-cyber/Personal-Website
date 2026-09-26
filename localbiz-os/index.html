@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LocalBiz OS — Run Your Local Business Smarter</title>
+  <meta name="description" content="LocalBiz OS helps local businesses manage sales, inventory, customers, expenses and invoices from one simple platform.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="js/main.js"></script>
+</head>
+<body>
+  <a class="visually-hidden-focusable" href="#main">Skip to content</a>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg lp-nav" aria-label="Main">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><img src="assets/icons/logo.svg" alt="">LocalBiz OS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#lpMenu" aria-controls="lpMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="lpMenu">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#solutions">Solutions</a></li>
+          <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        </ul>
+        <div class="d-flex flex-column flex-lg-row gap-2 mt-3 mt-lg-0">
+          <a href="login.html" class="btn btn-outline-light" data-guest-only>Login</a>
+          <a href="register.html" class="btn btn-primary" data-guest-only>Get Started</a>
+          <a href="dashboard.html" class="btn btn-primary" data-member-only hidden><i class="bi bi-grid-1x2"></i>Open dashboard</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- Hero -->
+    <header class="lp-hero text-center">
+      <div class="container">
+        <span class="lp-eyebrow fade-up"><span class="tag">New</span>One workspace for sales, stock &amp; money</span>
+        <h1 class="fade-up d1">Run Your Local Business <span class="grad">Smarter.</span></h1>
+        <p class="lead fade-up d2">LocalBiz OS brings your sales, inventory, customers, expenses and invoices together in one clean platform — so you spend less time on registers and more time growing your shop.</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3 mt-4 fade-up d3">
+          <a href="register.html" class="btn btn-primary btn-lg">Start Managing Free <i class="bi bi-arrow-right"></i></a>
+          <a href="#features" class="btn btn-lg btn-outline-light">Explore Features</a>
+        </div>
+        <p class="hero-note fade-up d4"><i class="bi bi-check-circle-fill"></i> Runs in your browser &nbsp;·&nbsp; <i class="bi bi-check-circle-fill"></i> Sample data included &nbsp;·&nbsp; <i class="bi bi-check-circle-fill"></i> No setup needed</p>
+
+        <!-- Dashboard mockup -->
+        <div class="mockup-wrap fade-up d4">
+          <div class="mockup" role="img" aria-label="Preview of the LocalBiz OS dashboard with sample data">
+            <div class="mockup-inner">
+              <div class="mk-side" aria-hidden="true">
+                <div class="mk-brand"><img src="assets/icons/logo.svg" alt="">LocalBiz OS</div>
+                <div class="mk-link active"><i class="bi bi-grid-1x2"></i>Dashboard</div>
+                <div class="mk-link"><i class="bi bi-bag-check"></i>Sales</div>
+                <div class="mk-link"><i class="bi bi-box-seam"></i>Products</div>
+                <div class="mk-link"><i class="bi bi-people"></i>Customers</div>
+                <div class="mk-link"><i class="bi bi-receipt"></i>Invoices</div>
+                <div class="mk-link"><i class="bi bi-wallet2"></i>Expenses</div>
+                <div class="mk-link"><i class="bi bi-bar-chart-line"></i>Reports</div>
+              </div>
+              <div class="mk-main" aria-hidden="true">
+                <div class="mk-top"><span class="mk-title">Good morning, Priya</span><span class="mk-search"></span></div>
+                <div class="mk-stats">
+                  <div class="mk-stat"><div class="l">Today's sales</div><div class="v">₹12,480</div><div class="d">↑ 8.2%</div></div>
+                  <div class="mk-stat"><div class="l">Revenue</div><div class="v">₹1.4L</div><div class="d">↑ 4.1%</div></div>
+                  <div class="mk-stat"><div class="l">Net profit</div><div class="v">₹38,900</div><div class="d">27% margin</div></div>
+                  <div class="mk-stat"><div class="l">Low stock</div><div class="v">4 items</div><div class="d">Reorder soon</div></div>
+                </div>
+                <div class="mk-grid">
+                  <div class="mk-card">
+                    <div class="h"><span>Sales overview</span><span class="text-muted">30 days</span></div>
+                    <svg viewBox="0 0 400 150" preserveAspectRatio="none">
+                      <defs><linearGradient id="mkFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b5bd6" stop-opacity=".28"/><stop offset="1" stop-color="#5b5bd6" stop-opacity="0"/></linearGradient></defs>
+                      <g stroke="#eef1f6" stroke-width="1"><line x1="0" y1="30" x2="400" y2="30"/><line x1="0" y1="70" x2="400" y2="70"/><line x1="0" y1="110" x2="400" y2="110"/></g>
+                      <path d="M0 118 C30 110 45 90 70 96 S115 70 140 78 S185 104 210 86 S255 44 280 52 S325 70 350 40 S385 30 400 24 L400 150 L0 150 Z" fill="url(#mkFill)"/>
+                      <path d="M0 118 C30 110 45 90 70 96 S115 70 140 78 S185 104 210 86 S255 44 280 52 S325 70 350 40 S385 30 400 24" fill="none" stroke="#5b5bd6" stroke-width="2.5"/>
+                      <path d="M0 130 C40 126 70 120 100 124 S160 112 200 116 S270 104 300 108 S370 96 400 100" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5"/>
+                    </svg>
+                  </div>
+                  <div class="mk-card">
+                    <div class="h"><span>Recent sales</span></div>
+                    <div class="mk-row"><span>INV-1042 · Rahul D.</span><span class="mk-pill ok">Paid</span></div>
+                    <div class="mk-row"><span>INV-1041 · Ananya R.</span><span class="mk-pill wait">Partial</span></div>
+                    <div class="mk-row"><span>INV-1040 · Arjun S.</span><span class="mk-pill ok">Paid</span></div>
+                    <div class="mk-row"><span>INV-1039 · Priya S.</span><span class="mk-pill ok">Paid</span></div>
+                    <div class="mk-row"><span>INV-1038 · Meera I.</span><span class="mk-pill wait">Pending</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Features -->
+    <section class="lp-section" id="features" aria-labelledby="featuresTitle">
+      <div class="container">
+        <div class="text-center mb-5 reveal">
+          <span class="section-eyebrow">Features</span>
+          <h2 class="section-title" id="featuresTitle">Everything your counter needs.<br class="d-none d-md-block"> Nothing it doesn't.</h2>
+          <p class="section-lead">Six connected tools that share the same data — record a sale once and your stock, dues and reports all update.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4 reveal">
+            <article class="feature-card">
+              <div class="f-icon"><i class="bi bi-bag-check"></i></div>
+              <h3>Sales Management</h3>
+              <p>Bill customers in seconds with automatic discount, tax and total calculations.</p>
+              <ul><li><i class="bi bi-check2"></i>Search and filter every sale</li><li><i class="bi bi-check2"></i>Cash, UPI, card or credit</li></ul>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4 reveal">
+            <article class="feature-card">
+              <div class="f-icon"><i class="bi bi-box-seam"></i></div>
+              <h3>Inventory Management</h3>
+              <p>Track stock, cost and selling price for every product, with margins built in.</p>
+              <ul><li><i class="bi bi-check2"></i>Automatic low-stock alerts</li><li><i class="bi bi-check2"></i>Stock updates on every sale</li></ul>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4 reveal">
+            <article class="feature-card">
+              <div class="f-icon"><i class="bi bi-people"></i></div>
+              <h3>Customer Management</h3>
+              <p>Keep contact details, purchase history and outstanding dues for every regular.</p>
+              <ul><li><i class="bi bi-check2"></i>Full purchase history</li><li><i class="bi bi-check2"></i>Dues at a glance</li></ul>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4 reveal">
+            <article class="feature-card">
+              <div class="f-icon"><i class="bi bi-receipt"></i></div>
+              <h3>Invoice Generation</h3>
+              <p>Create clean, multi-item invoices with your business details — ready to print.</p>
+              <ul><li><i class="bi bi-check2"></i>Print or download instantly</li><li><i class="bi bi-check2"></i>Partial payments tracked</li></ul>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4 reveal">
+            <article class="feature-card">
+              <div class="f-icon"><i class="bi bi-wallet2"></i></div>
+              <h3>Expense Tracking</h3>
+              <p>Log rent, salaries, bills and supplier payments to see where money goes.</p>
+              <ul><li><i class="bi bi-check2"></i>Eight ready categories</li><li><i class="bi bi-check2"></i>Monthly totals &amp; filters</li></ul>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4 reveal">
+            <article class="feature-card">
+              <div class="f-icon"><i class="bi bi-bar-chart-line"></i></div>
+              <h3>Business Analytics</h3>
+              <p>Revenue, expenses and profit over any date range, plus best sellers and top customers.</p>
+              <ul><li><i class="bi bi-check2"></i>Interactive charts</li><li><i class="bi bi-check2"></i>One-click CSV export</li></ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="lp-section alt" id="how" aria-labelledby="howTitle">
+      <div class="container">
+        <div class="text-center mb-5 reveal">
+          <span class="section-eyebrow">How it works</span>
+          <h2 class="section-title" id="howTitle">Up and running in three steps</h2>
+        </div>
+        <div class="row g-4 steps-row">
+          <div class="steps-line" aria-hidden="true"></div>
+          <div class="col-md-4 reveal">
+            <div class="step-card"><div class="step-num">1</div><h3>Add your business</h3><p>Create an account with your business name, type and contact details. Your invoices pick them up automatically.</p></div>
+          </div>
+          <div class="col-md-4 reveal">
+            <div class="step-card"><div class="step-num">2</div><h3>Manage daily operations</h3><p>Record sales, update stock, add customers, log expenses and collect payments — all from one sidebar.</p></div>
+          </div>
+          <div class="col-md-4 reveal">
+            <div class="step-card"><div class="step-num">3</div><h3>Track growth</h3><p>Watch revenue, expenses and profit on your dashboard and dig deeper in reports whenever you need.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Business types -->
+    <section class="lp-section" id="solutions" aria-labelledby="solutionsTitle">
+      <div class="container">
+        <div class="row align-items-end mb-5 g-4">
+          <div class="col-lg-7 reveal">
+            <span class="section-eyebrow">Solutions</span>
+            <h2 class="section-title mb-0" id="solutionsTitle">Made for the businesses on your street</h2>
+          </div>
+          <div class="col-lg-5 reveal">
+            <p class="section-lead mb-0">Whether you sell by the kilo, by the piece or by the hour, LocalBiz OS fits the way you already work.</p>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-sm-6 col-lg-4 reveal"><div class="biz-card"><span class="b-icon tone-accent"><i class="bi bi-shop"></i></span><h3>Retail</h3><p>Fast billing, product catalogue and daily sales totals for general stores.</p></div></div>
+          <div class="col-sm-6 col-lg-4 reveal"><div class="biz-card"><span class="b-icon tone-success"><i class="bi bi-basket2"></i></span><h3>Grocery</h3><p>Track fast-moving stock and never run out of the essentials customers expect.</p></div></div>
+          <div class="col-sm-6 col-lg-4 reveal"><div class="biz-card"><span class="b-icon tone-info"><i class="bi bi-scissors"></i></span><h3>Salon</h3><p>Bill services and products together and keep a record of every regular client.</p></div></div>
+          <div class="col-sm-6 col-lg-4 reveal"><div class="biz-card"><span class="b-icon tone-warning"><i class="bi bi-cpu"></i></span><h3>Electronics</h3><p>Higher-value items with margins, partial payments and printable invoices.</p></div></div>
+          <div class="col-sm-6 col-lg-4 reveal"><div class="biz-card"><span class="b-icon tone-danger"><i class="bi bi-tools"></i></span><h3>Service Business</h3><p>Repair shops and service providers can invoice jobs and chase pending dues.</p></div></div>
+          <div class="col-sm-6 col-lg-4 reveal"><div class="biz-card"><span class="b-icon tone-neutral"><i class="bi bi-bag"></i></span><h3>Small Shops</h3><p>Stationery, clothing and gift stores get the same tools without the complexity.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Analytics preview -->
+    <section class="lp-section alt" aria-labelledby="analyticsTitle">
+      <div class="container">
+        <div class="row align-items-center g-4 g-lg-5">
+          <div class="col-lg-5 reveal">
+            <span class="section-eyebrow">Analytics</span>
+            <h2 class="section-title" id="analyticsTitle">See your business clearly, every day</h2>
+            <p class="section-lead">No spreadsheets. The dashboard and reports turn every sale and expense into numbers you can act on.</p>
+            <ul class="check-list">
+              <li><i class="bi bi-check-circle-fill"></i><span><strong>Revenue − Expenses = Profit</strong>, calculated for any date range.</span></li>
+              <li><i class="bi bi-check-circle-fill"></i><span>Daily, weekly and monthly revenue trends.</span></li>
+              <li><i class="bi bi-check-circle-fill"></i><span>Best-selling and slow-moving products.</span></li>
+              <li><i class="bi bi-check-circle-fill"></i><span>Top customers and new customers.</span></li>
+            </ul>
+          </div>
+          <div class="col-lg-7 reveal">
+            <div class="analytics-panel">
+              <div class="d-flex justify-content-between align-items-start mb-4 position-relative">
+                <div><div class="fw-semibold">Monthly performance</div><div class="small text-secondary">Illustrative sample data</div></div>
+                <span class="demo-pill">Sample</span>
+              </div>
+              <div class="row g-3 mb-4 position-relative">
+                <div class="col-4 ap-stat"><div class="l">Revenue</div><div class="v">₹1.52L</div><div class="d">↑ 12%</div></div>
+                <div class="col-4 ap-stat"><div class="l">Expenses</div><div class="v">₹1.06L</div><div class="d">↓ 3%</div></div>
+                <div class="col-4 ap-stat"><div class="l">Net profit</div><div class="v">₹46K</div><div class="d">30% margin</div></div>
+              </div>
+              <svg class="ap-chart mb-4 position-relative" viewBox="0 0 600 220" preserveAspectRatio="none" role="img" aria-label="Sample revenue trend line">
+                <defs><linearGradient id="apFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c7cf2" stop-opacity=".45"/><stop offset="1" stop-color="#7c7cf2" stop-opacity="0"/></linearGradient></defs>
+                <g stroke="rgba(255,255,255,.06)"><line x1="0" y1="55" x2="600" y2="55"/><line x1="0" y1="110" x2="600" y2="110"/><line x1="0" y1="165" x2="600" y2="165"/></g>
+                <path d="M0 170 C50 160 80 130 120 138 S190 100 240 110 S320 150 360 120 S430 60 480 72 S560 40 600 30 L600 220 L0 220 Z" fill="url(#apFill)"/>
+                <path d="M0 170 C50 160 80 130 120 138 S190 100 240 110 S320 150 360 120 S430 60 480 72 S560 40 600 30" fill="none" stroke="#9d9dfa" stroke-width="3"/>
+                <circle cx="480" cy="72" r="6" fill="#0b1020" stroke="#9d9dfa" stroke-width="3"/>
+              </svg>
+              <div class="ap-bars position-relative">
+                <div class="ap-bar"><div class="row-l"><span>Grocery</span><span>46%</span></div><div class="track"><div class="fill" style="--w:46%"></div></div></div>
+                <div class="ap-bar"><div class="row-l"><span>Beverages</span><span>24%</span></div><div class="track"><div class="fill" style="--w:24%"></div></div></div>
+                <div class="ap-bar"><div class="row-l"><span>Household &amp; care</span><span>18%</span></div><div class="track"><div class="fill" style="--w:18%"></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="lp-section" aria-labelledby="testimonialsTitle">
+      <div class="container">
+        <div class="text-center mb-5 reveal">
+          <span class="section-eyebrow">What owners could say</span>
+          <h2 class="section-title" id="testimonialsTitle">Designed around real shop routines</h2>
+          <p class="section-lead">The quotes below are illustrative, written for fictional personas to show how LocalBiz OS is meant to be used. They are not from real customers.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4 reveal">
+            <figure class="testimonial">
+              <div class="stars" aria-hidden="true">★★★★★</div>
+              <blockquote>“I used to close the day with a notebook and a calculator. Now the dashboard tells me what sold, what's pending and what to reorder.”</blockquote>
+              <figcaption class="who"><span class="avatar tone-2" aria-hidden="true">MK</span><div><strong>Mitali K.</strong><span>Grocery store owner · demo persona</span></div></figcaption>
+            </figure>
+          </div>
+          <div class="col-md-6 col-lg-4 reveal">
+            <figure class="testimonial">
+              <div class="stars" aria-hidden="true">★★★★★</div>
+              <blockquote>“Partial payments were my biggest headache. Seeing each customer's balance and due date in one list makes follow-ups simple.”</blockquote>
+              <figcaption class="who"><span class="avatar tone-5" aria-hidden="true">SB</span><div><strong>Sourav B.</strong><span>Electronics shop · demo persona</span></div></figcaption>
+            </figure>
+          </div>
+          <div class="col-md-6 col-lg-4 reveal">
+            <figure class="testimonial">
+              <div class="stars" aria-hidden="true">★★★★★</div>
+              <blockquote>“Printing a proper invoice with my salon's name on it makes the business feel more professional to my clients.”</blockquote>
+              <figcaption class="who"><span class="avatar tone-4" aria-hidden="true">NR</span><div><strong>Nisha R.</strong><span>Salon owner · demo persona</span></div></figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="lp-section alt" id="pricing" aria-labelledby="pricingTitle">
+      <div class="container">
+        <div class="text-center mb-5 reveal">
+          <span class="section-eyebrow">Pricing</span>
+          <h2 class="section-title" id="pricingTitle">Simple plans that grow with you</h2>
+          <p class="section-lead">Illustrative pricing for this demo project — no payments are processed and every feature is unlocked in the demo.</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+          <div class="col-md-6 col-lg-4 reveal">
+            <div class="pricing-card">
+              <h3 class="h5">Starter</h3>
+              <p class="text-muted small">For new and single-counter shops.</p>
+              <div class="price">₹0<small> / month</small></div>
+              <ul><li><i class="bi bi-check2"></i>Sales, products &amp; customers</li><li><i class="bi bi-check2"></i>Printable invoices</li><li><i class="bi bi-check2"></i>Dashboard overview</li></ul>
+              <a href="register.html" class="btn btn-light w-100">Start free</a>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 reveal">
+            <div class="pricing-card featured">
+              <span class="badge-top">Most popular</span>
+              <h3 class="h5">Growth</h3>
+              <p class="text-muted small">For busy shops that sell on credit.</p>
+              <div class="price">₹499<small> / month</small></div>
+              <ul><li><i class="bi bi-check2"></i>Everything in Starter</li><li><i class="bi bi-check2"></i>Payments &amp; dues tracking</li><li><i class="bi bi-check2"></i>Expense tracking</li><li><i class="bi bi-check2"></i>Reports with CSV export</li></ul>
+              <a href="register.html" class="btn btn-primary w-100">Try it in the demo</a>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 reveal">
+            <div class="pricing-card">
+              <h3 class="h5">Business</h3>
+              <p class="text-muted small">For owners who want the full picture.</p>
+              <div class="price">₹999<small> / month</small></div>
+              <ul><li><i class="bi bi-check2"></i>Everything in Growth</li><li><i class="bi bi-check2"></i>Customer purchase history</li><li><i class="bi bi-check2"></i>Low-stock &amp; payment alerts</li><li><i class="bi bi-check2"></i>Dark mode &amp; multi-currency display</li></ul>
+              <a href="register.html" class="btn btn-light w-100">Try it in the demo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="lp-section" id="about" aria-labelledby="aboutTitle">
+      <div class="container">
+        <div class="row g-4 g-lg-5 align-items-center">
+          <div class="col-lg-5 reveal">
+            <span class="section-eyebrow">About</span>
+            <h2 class="section-title" id="aboutTitle">Business software that respects small businesses</h2>
+            <p class="section-lead">LocalBiz OS is a concept product: a frontend demonstration of what a modern operating system for neighbourhood businesses could look like.</p>
+          </div>
+          <div class="col-lg-7">
+            <div class="row g-4">
+              <div class="col-sm-6 reveal"><div class="about-card"><i class="bi bi-bullseye a-icon"></i><h3 class="h6 mt-3">Our goal</h3><p class="small text-muted mb-0">Replace paper registers and scattered spreadsheets with one calm, focused workspace.</p></div></div>
+              <div class="col-sm-6 reveal"><div class="about-card"><i class="bi bi-geo-alt a-icon"></i><h3 class="h6 mt-3">Built for India first</h3><p class="small text-muted mb-0">INR by default, GST-style tax, UPI and credit sales — with USD and EUR display too.</p></div></div>
+              <div class="col-sm-6 reveal"><div class="about-card"><i class="bi bi-shield-lock a-icon"></i><h3 class="h6 mt-3">Private by design</h3><p class="small text-muted mb-0">In this demo, every record stays in your own browser. Nothing is sent to a server.</p></div></div>
+              <div class="col-sm-6 reveal"><div class="about-card"><i class="bi bi-code-slash a-icon"></i><h3 class="h6 mt-3">Open web tech</h3><p class="small text-muted mb-0">Plain HTML, CSS, Bootstrap 5 and JavaScript — fast, lightweight and easy to run anywhere.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="lp-section pt-0" aria-labelledby="ctaTitle">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2 id="ctaTitle">Ready to simplify your business?</h2>
+          <p>Create your workspace in under two minutes and explore it with realistic sample data.</p>
+          <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a href="register.html" class="btn btn-primary btn-lg">Get Started <i class="bi bi-arrow-right"></i></a>
+            <a href="login.html" class="btn btn-outline-light btn-lg">Try the demo account</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="lp-footer">
+    <div class="container">
+      <div class="row g-4 g-lg-5">
+        <div class="col-lg-4">
+          <div class="brand"><img src="assets/icons/logo.svg" alt="">LocalBiz OS</div>
+          <p class="mb-0">The local business operating system — sales, stock, customers, invoices and expenses in one place.</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 offset-lg-2">
+          <h4>Product</h4>
+          <ul><li><a href="#features">Features</a></li><li><a href="#solutions">Solutions</a></li><li><a href="#pricing">Pricing</a></li><li><a href="login.html">Live demo</a></li></ul>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <h4>Company</h4>
+          <ul><li><a href="#about">About</a></li><li><a href="#how">How it works</a></li><li><a href="register.html">Get started</a></li></ul>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="login.html">Log in</a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy</a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> LocalBiz OS. A demo project — all data shown is sample data.</span>
+        <span>Made with HTML, CSS, Bootstrap &amp; JavaScript</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Privacy -->
+  <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header"><h2 class="modal-title" id="privacyTitle">Privacy</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+        <div class="modal-body small">
+          <p>LocalBiz OS is a demonstration project with no backend.</p>
+          <ul>
+            <li>Everything you enter is saved only in your browser's localStorage.</li>
+            <li>No data is transmitted, sold or shared.</li>
+            <li>Passwords are validated in the browser and never stored.</li>
+            <li>Clearing site data, or using <em>Settings → Data</em>, removes your records.</li>
+          </ul>
+          <p class="mb-0">Fonts, icons and libraries are loaded from public CDNs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terms -->
+  <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header"><h2 class="modal-title" id="termsTitle">Terms of Use</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+        <div class="modal-body small">
+          <p>This site is provided as a portfolio / internship demo, as is, without warranty.</p>
+          <ul>
+            <li>It is not intended for real bookkeeping, tax filing or legal records.</li>
+            <li>Names, figures, testimonials and pricing shown are fictional or illustrative.</li>
+            <li>Please don't enter sensitive personal or financial information.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

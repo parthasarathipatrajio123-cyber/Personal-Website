@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-app="reports">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reports · LocalBiz OS</title>
+  <meta name="description" content="Revenue, expense, product and customer analytics in LocalBiz OS.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="js/main.js"></script>
+</head>
+<body class="app-body">
+  <a class="visually-hidden-focusable" href="#main">Skip to content</a>
+  <div id="appSidebar"></div>
+
+  <div class="app-main">
+    <div id="appTopbar"></div>
+
+    <main id="main" class="app-content">
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb-lite"><i class="bi bi-house"></i> Workspace <i class="bi bi-chevron-right small"></i> Reports</div>
+          <h1>Reports &amp; analytics</h1>
+          <p id="rangeLabel">Performance for the selected period.</p>
+        </div>
+        <div class="page-actions align-items-center">
+          <select class="form-select w-auto" id="rangeSelect" aria-label="Date range">
+            <option value="7">Last 7 days</option>
+            <option value="30" selected>Last 30 days</option>
+            <option value="90">Last 90 days</option>
+            <option value="month">This month</option>
+            <option value="lastmonth">Last month</option>
+            <option value="all">All time</option>
+            <option value="custom">Custom range…</option>
+          </select>
+          <button type="button" class="btn btn-primary" id="exportBtn"><i class="bi bi-download"></i>Export report</button>
+        </div>
+      </div>
+
+      <div class="lb-card mb-4" id="customRange" hidden>
+        <form class="lb-card-body d-flex flex-wrap align-items-end gap-3" id="customForm" novalidate>
+          <div>
+            <label class="form-label" for="customFrom">From</label>
+            <input type="date" class="form-control" id="customFrom" required>
+          </div>
+          <div>
+            <label class="form-label" for="customTo">To</label>
+            <input type="date" class="form-control" id="customTo" required>
+            <div class="invalid-feedback">Must be on or after the start date.</div>
+          </div>
+          <button type="submit" class="btn btn-light"><i class="bi bi-funnel"></i>Apply range</button>
+        </form>
+      </div>
+
+      <section class="row g-3 mb-4" id="kpis" aria-label="Key figures"></section>
+
+      <!-- Profit analytics -->
+      <section class="lb-card mb-4">
+        <div class="lb-card-header">
+          <div>
+            <h2>Profit analytics</h2>
+            <p class="card-sub">Revenue minus expenses for the period</p>
+          </div>
+          <span class="chip" id="marginChip"></span>
+        </div>
+        <div class="lb-card-body">
+          <div class="equation" id="equation"></div>
+        </div>
+      </section>
+
+      <div class="row g-4 mb-4">
+        <!-- Revenue analytics -->
+        <div class="col-xl-8">
+          <section class="lb-card h-100">
+            <div class="lb-card-header">
+              <div>
+                <h2>Revenue analytics</h2>
+                <p class="card-sub" id="revenueSub">Revenue by period</p>
+              </div>
+              <div class="nav-pills-lb" role="group" aria-label="Group revenue by">
+                <button type="button" class="btn active" data-group="day">Daily</button>
+                <button type="button" class="btn" data-group="week">Weekly</button>
+                <button type="button" class="btn" data-group="month">Monthly</button>
+              </div>
+            </div>
+            <div class="lb-card-body">
+              <div class="chart-wrap lg"><canvas id="revenueChart" role="img" aria-label="Bar chart of revenue and expenses by period"></canvas></div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Expense analytics -->
+        <div class="col-xl-4">
+          <section class="lb-card h-100">
+            <div class="lb-card-header">
+              <div>
+                <h2>Expense breakdown</h2>
+                <p class="card-sub">Share of spending by category</p>
+              </div>
+            </div>
+            <div class="lb-card-body">
+              <div class="chart-wrap xs mb-4"><canvas id="expenseChart" role="img" aria-label="Doughnut chart of expenses by category"></canvas></div>
+              <ul class="legend-list" id="expenseLegend"></ul>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Product analytics -->
+      <div class="row g-4 mb-4">
+        <div class="col-xl-7">
+          <section class="lb-card h-100">
+            <div class="lb-card-header">
+              <div>
+                <h2>Best-selling products</h2>
+                <p class="card-sub">Top products by revenue</p>
+              </div>
+            </div>
+            <div class="lb-card-body">
+              <div class="chart-wrap sm"><canvas id="productChart" role="img" aria-label="Bar chart of best-selling products"></canvas></div>
+            </div>
+          </section>
+        </div>
+        <div class="col-xl-5">
+          <section class="lb-card h-100">
+            <div class="lb-card-header">
+              <div>
+                <h2>Low-performing products</h2>
+                <p class="card-sub">Fewest units sold in this period</p>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table lb-table">
+                <thead><tr><th>Product</th><th class="num">Units</th><th class="num">Revenue</th><th class="num">Stock</th></tr></thead>
+                <tbody id="lowProducts"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Customer analytics -->
+      <div class="row g-4">
+        <div class="col-xl-7">
+          <section class="lb-card h-100">
+            <div class="lb-card-header">
+              <div>
+                <h2>Top customers</h2>
+                <p class="card-sub">Highest spending in this period</p>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table lb-table">
+                <thead><tr><th>#</th><th>Customer</th><th class="num">Orders</th><th class="num">Spent</th><th class="num">Share</th></tr></thead>
+                <tbody id="topCustomers"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+        <div class="col-xl-5">
+          <section class="lb-card h-100">
+            <div class="lb-card-header">
+              <div>
+                <h2>New customers</h2>
+                <p class="card-sub" id="newCustomersSub">Added in this period</p>
+              </div>
+            </div>
+            <div class="lb-card-body pt-2" id="newCustomers"></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+  <script src="js/reports.js"></script>
+</body>
+</html>

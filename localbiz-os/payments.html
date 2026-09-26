@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-app="payments">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Payments · LocalBiz OS</title>
+  <meta name="description" content="Track dues and record customer payments in LocalBiz OS.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="js/main.js"></script>
+</head>
+<body class="app-body">
+  <a class="visually-hidden-focusable" href="#main">Skip to content</a>
+  <div id="appSidebar"></div>
+
+  <div class="app-main">
+    <div id="appTopbar"></div>
+
+    <main id="main" class="app-content">
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb-lite"><i class="bi bi-house"></i> Workspace <i class="bi bi-chevron-right small"></i> Payments</div>
+          <h1>Payments &amp; dues</h1>
+          <p>See who owes what, and record full or partial payments against invoices.</p>
+        </div>
+        <div class="page-actions">
+          <button type="button" class="btn btn-light" id="exportBtn"><i class="bi bi-filetype-csv"></i>Export dues</button>
+        </div>
+      </div>
+
+      <section class="row g-3 mb-4" id="paymentStats" aria-label="Payments overview"></section>
+
+      <div class="row g-4">
+        <div class="col-xxl-8">
+          <section class="lb-card">
+            <div class="toolbar">
+              <div class="nav-pills-lb flex-wrap" role="group" aria-label="Filter by status" id="statusTabs">
+                <button type="button" class="btn active" data-status="open">Outstanding</button>
+                <button type="button" class="btn" data-status="Overdue">Overdue</button>
+                <button type="button" class="btn" data-status="Partial">Partial</button>
+                <button type="button" class="btn" data-status="Pending">Pending</button>
+                <button type="button" class="btn" data-status="Paid">Paid</button>
+                <button type="button" class="btn" data-status="">All</button>
+              </div>
+              <label class="search-input mb-0 ms-xl-auto">
+                <span class="visually-hidden">Search payments</span>
+                <i class="bi bi-search" aria-hidden="true"></i>
+                <input type="search" class="form-control form-control-sm" id="searchInput" placeholder="Customer or invoice…">
+              </label>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover lb-table">
+                <thead>
+                  <tr>
+                    <th>Customer</th>
+                    <th>Invoice</th>
+                    <th class="num">Total</th>
+                    <th class="num">Paid</th>
+                    <th class="num">Due</th>
+                    <th>Due date</th>
+                    <th>Status</th>
+                    <th class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="paymentsBody"></tbody>
+              </table>
+            </div>
+            <div class="lb-card-footer" id="paymentsPager"></div>
+          </section>
+        </div>
+
+        <div class="col-xxl-4">
+          <section class="lb-card">
+            <div class="lb-card-header">
+              <div>
+                <h2>Recent collections</h2>
+                <p class="card-sub">Latest payments received</p>
+              </div>
+            </div>
+            <div class="lb-card-body pt-2" id="recentPayments"></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Record payment modal -->
+  <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" id="paymentForm" novalidate>
+        <div class="modal-header">
+          <div>
+            <h2 class="modal-title" id="paymentModalTitle">Record payment</h2>
+            <p class="modal-subtitle" id="paymentSub"></p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="saleId">
+          <div class="calc-box mb-4" id="paymentSummary"></div>
+          <div class="row g-3">
+            <div class="col-12">
+              <div class="d-flex justify-content-between align-items-end">
+                <label class="form-label" for="payAmount">Amount received</label>
+                <button type="button" class="btn btn-link btn-sm p-0 mb-1 fw-semibold" id="payFullBtn">Pay full balance</button>
+              </div>
+              <div class="input-group has-validation">
+                <span class="input-group-text currency-sign">₹</span>
+                <input type="number" class="form-control form-control-lg" id="payAmount" name="amount" min="0.01" step="0.01" required>
+                <div class="invalid-feedback" id="payAmountFeedback">Enter an amount up to the balance due.</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="payMethod">Method</label>
+              <select class="form-select" id="payMethod" name="method" required></select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="payDate">Payment date</label>
+              <input type="date" class="form-control" id="payDate" name="date" required>
+              <div class="invalid-feedback">Pick a date that isn't in the future.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="payNote">Note <span class="text-muted fw-normal">(optional)</span></label>
+              <input type="text" class="form-control" id="payNote" name="note" maxlength="120" placeholder="e.g. UPI ref 4821">
+            </div>
+          </div>
+          <div class="alert-lb info mt-4 mb-0" aria-live="polite" id="remainingNote"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="bi bi-check2"></i>Record payment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/payments.js"></script>
+</body>
+</html>
